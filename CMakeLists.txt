@@ -103,14 +103,14 @@ include_directories("${source_dir}/googletest/include"
 
 ##################################
 # set project include
-include_directories(AFTER ${CMAKE_CURRENT_SOURCE_DIR}/src ${source_dir}/include ${PYTHON_INCLUDE_DIRS})
+include_directories(AFTER ${CMAKE_CURRENT_SOURCE_DIR} ${source_dir}/include ${PYTHON_INCLUDE_DIRS})
 
 ##################################
 # Main
-file(GLOB_RECURSE MAIN_SRC src/*.cpp)
-add_executable(Main ${MAIN_SRC})
-target_link_libraries(Main  sfml-graphics sfml-window sfml-system ${Boost_LIBRARIES} ${PYTHON_LIBRARY})
-
+file(GLOB_RECURSE LOGIC_SRC Logic/*.cpp)
+add_library(Logic ${LOGIC_SRC})
+target_link_libraries(Logic  sfml-graphics sfml-window sfml-system ${Boost_LIBRARIES} ${PYTHON_LIBRARY})
+target_include_directories(Logic PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Logic/)
 ##################################
 # Define a test
 # file(GLOB_RECURSE TEST_SRC Test/*.cpp)
