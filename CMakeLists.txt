@@ -34,11 +34,11 @@ else()
 endif()
 
 # Add boost library
-FIND_PACKAGE( Boost 1.40 COMPONENTS python REQUIRED )
+FIND_PACKAGE( Boost 1.40 COMPONENTS python3 REQUIRED )
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
 # Add python library
-set(Python_ADDITIONAL_VERSIONS 2.7)
+set(PythonInterp 3)
 find_package(PythonLibs 2 REQUIRED)
 
 ##################################
@@ -103,13 +103,13 @@ include_directories("${source_dir}/googletest/include"
 
 ##################################
 # set project include
-include_directories(AFTER ${CMAKE_CURRENT_SOURCE_DIR}/src ${source_dir}/include )
+include_directories(AFTER ${CMAKE_CURRENT_SOURCE_DIR}/src ${source_dir}/include ${PYTHON_INCLUDE_DIRS})
 
 ##################################
 # Main
 file(GLOB_RECURSE MAIN_SRC src/*.cpp)
 add_executable(Main ${MAIN_SRC})
-target_link_libraries(Main  sfml-graphics sfml-window sfml-system ${Boost_LIBRARIES} python2.7)
+target_link_libraries(Main  sfml-graphics sfml-window sfml-system ${Boost_LIBRARIES} ${PYTHON_LIBRARY})
 
 ##################################
 # Define a test
