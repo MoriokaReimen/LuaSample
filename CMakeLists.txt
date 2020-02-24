@@ -106,11 +106,19 @@ include_directories("${source_dir}/googletest/include"
 include_directories(AFTER ${CMAKE_CURRENT_SOURCE_DIR} ${source_dir}/include ${PYTHON_INCLUDE_DIRS})
 
 ##################################
-# Main
+# Engine
 file(GLOB_RECURSE LOGIC_SRC Logic/*.cpp)
 add_library(Logic ${LOGIC_SRC})
-target_link_libraries(Logic  sfml-graphics sfml-window sfml-system ${Boost_LIBRARIES} ${PYTHON_LIBRARY})
+target_link_libraries(Logic PUBLIC ${Boost_LIBRARIES} ${PYTHON_LIBRARY})
 target_include_directories(Logic PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Logic/)
+
+##################################
+# Define a Main
+file(GLOB_RECURSE MAIN_SRC main/*.cpp)
+add_executable(Main ${MAIN_SRC})
+target_link_libraries(Main Logic sfml-graphics sfml-window sfml-system ${Boost_LIBRARIES} )
+target_include_directories(Main PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/main/ ${Boost_INCLUDE_DIR})
+
 ##################################
 # Define a test
 # file(GLOB_RECURSE TEST_SRC Test/*.cpp)

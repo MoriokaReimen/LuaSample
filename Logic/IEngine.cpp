@@ -1,6 +1,12 @@
 #include "IEngine.hpp"
 namespace Logic
 {
+
+IEngine::~IEngine()
+{
+
+}
+
 void IEngine::registerEntity(PENTITY &entity)
 {
     this->entities_.push_back(entity);

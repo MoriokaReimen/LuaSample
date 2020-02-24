@@ -8,6 +8,11 @@ IEntity::IEntity(IEngine *engine)
     engine_ = engine;
 }
 
+IEntity::~IEntity()
+{
+
+}
+
 Eigen::Vector2d IEntity::getPosition() const
 {
     return this->status_.position;

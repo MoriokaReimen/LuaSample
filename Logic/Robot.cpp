@@ -9,6 +9,11 @@ Robot::Robot(IEngine* engine) : IEntity(engine)
 
 }
 
+Robot::~Robot()
+{
+
+}
+
 void Robot::step()
 {
     Command command;

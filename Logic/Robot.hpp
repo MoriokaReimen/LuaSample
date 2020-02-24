@@ -13,8 +13,9 @@ struct Command
 class Robot : public IEntity
 {
 public:
-    Robot() = delete;
     Robot(IEngine* engine);
+    ~Robot() override;
+    Robot() = delete;
     virtual void step() override;
 };
 
