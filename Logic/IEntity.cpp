@@ -54,4 +54,14 @@ void IEntity::setStatus(const Status &status)
     this->status_ = status;
 }
 
+void IEntity::setCollision(const COLLISION& collision)
+{
+    this->status_.collision = collision;
+}
+
+COLLISION IEntity::getCollision() const
+{
+    return this->status_.collision;
+}
+
 }; // namespace Logic

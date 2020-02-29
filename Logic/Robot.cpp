@@ -1,5 +1,6 @@
 #include "Robot.hpp"
 #include <cmath>
+#include "ScriptEngine.hpp"
 #include <eigen3/Eigen/Geometry>
 
 namespace Logic
@@ -18,7 +19,10 @@ void Robot::step()
 {
     Command command;
     Status status = getStatus();
+    auto script_engine = ScriptEngine::getInstance();
 
+    command = script_engine->exec("script/brain.py", status);
+    
     /* set rotation */
     auto turn = std::clamp(command.turn, -1.0, 1.0);
     auto rotation = status.rotation + turn;

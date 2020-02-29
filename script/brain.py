@@ -1,4 +1,6 @@
-if __name__ == '__main__':
-    print(hoge)
-    fuga.i = 12
-    print(fuga)
+
+command.turn = 0
+command.throttle = 1
+temp = status.collision
+if status.collision > 0:
+    command.turn = 0

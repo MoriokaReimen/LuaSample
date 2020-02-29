@@ -41,9 +41,12 @@ INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 set(PythonInterp 3)
 find_package(PythonLibs 2 REQUIRED)
 
-##################################
-# install GoogleTest
+###################################################################
+# enable ExternalProject
 include(ExternalProject)
+set(EXTERNAL_INSTALL_LOCATION ${CMAKE_BINARY_DIR}/external)
+include_directories(${EXTERNAL_INSTALL_LOCATION}/include)
+link_directories(${EXTERNAL_INSTALL_LOCATION}/lib)
 
 # Download and install GoogleTest
 ExternalProject_Add(
@@ -101,6 +104,30 @@ set_target_properties(gmock PROPERTIES
 include_directories("${source_dir}/googletest/include"
                     "${source_dir}/googlemock/include")
 
+
+###################################################################
+# download and build sol2
+ExternalProject_Add(
+    sol2-ext
+    GIT_REPOSITORY https://github.com/ThePhD/sol2.git
+    GIT_TAG develop
+    CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTERNAL_INSTALL_LOCATION}
+)
+
+###################################################################
+# download and build lua
+ExternalProject_Add(
+    lua-ext
+    GIT_REPOSITORY https://github.com/LuaDist/lua.git
+    GIT_TAG master
+    CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTERNAL_INSTALL_LOCATION} -DBUILD_SHARED_LIBS=OFF
+)
+
+ADD_LIBRARY(lua IMPORTED STATIC)
+SET_TARGET_PROPERTIES(lua PROPERTIES IMPORTED_LOCATION ${EXTERNAL_INSTALL_LOCATION}/lib/liblua.a)
+ADD_DEPENDENCIES(lua lua-ext)
+
+
 ##################################
 # set project include
 include_directories(AFTER ${CMAKE_CURRENT_SOURCE_DIR} ${source_dir}/include ${PYTHON_INCLUDE_DIRS})
@@ -116,7 +143,7 @@ target_include_directories(Logic PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Logic/)
 # Define a Main
 file(GLOB_RECURSE MAIN_SRC main/*.cpp)
 add_executable(Main ${MAIN_SRC})
-target_link_libraries(Main Logic sfml-graphics sfml-window sfml-system ${Boost_LIBRARIES} )
+target_link_libraries(Main sfml-graphics sfml-window sfml-system ${Boost_LIBRARIES} ${PYTHON_LIBRARY} Logic pthread m dl lua)
 target_include_directories(Main PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/main/ ${Boost_INCLUDE_DIR})
 
 ##################################

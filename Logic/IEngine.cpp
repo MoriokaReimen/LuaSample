@@ -16,12 +16,12 @@ bool IEngine::updatePosition(IEntity& self, const Eigen::Vector2d &position)
 {
     COLLISION collision = NO_COLLIDE;
 
-    if(position.x() < 0.0 || position.x() > 6000.0)
+    if(position.x() < 0.0 || position.x() > 2000.0)
     {
         collision = WALL;
     }
 
-    if(position.y() < 0.0 || position.y() > 3000.0)
+    if(position.y() < 0.0 || position.y() > 1000.0)
     {
         collision = WALL;
     }
@@ -31,12 +31,17 @@ bool IEngine::updatePosition(IEntity& self, const Eigen::Vector2d &position)
         self.setPosition(position);
     }
 
+    self.setCollision(collision);
     return collision == NO_COLLIDE;
 }
 
 bool IEngine::updateRotation(IEntity& self, const double &rotation)
 {
-    self.setRotation(rotation);
+    double wrapped = std::fmod(rotation, 360.0);
+    if(wrapped < 0)
+        wrapped += 360;
+
+    self.setRotation(wrapped);
     return true;
 }
 

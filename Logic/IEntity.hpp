@@ -43,6 +43,8 @@ public:
     void setType(const ENTITY_TYPE& type);
     Status getStatus() const;
     void setStatus(const Status& status);
+    void setCollision(const COLLISION& collision);
+    COLLISION getCollision() const;
     virtual void step() = 0;
 };
 }
