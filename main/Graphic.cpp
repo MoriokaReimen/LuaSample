@@ -47,9 +47,10 @@ void Graphic::draw_scene(Logic::PENTITY& entity)
             auto status = entity->getStatus();
             ArcShape sight(60, 100);
             sf::CircleShape prey_body(10);
+            double rotation = entity->getRotation();
 
             sight.setPosition(robot_pos.x(), robot_pos.y());
-            sight.setRotation(entity->getRotation() + 60.0);
+            sight.setRotation(rotation + 60.0);
             sight.setFillColor(sf::Color(255, 255, 0, 100));
 
             prey_body.setPosition(robot_pos.x() - 10.0, robot_pos.y() - 10.0);

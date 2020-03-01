@@ -30,7 +30,7 @@ void Robot::step()
     /* set Position */
     auto position = status.position;
     command.throttle = std::clamp(command.throttle, -1.0, 1.0);
-    position += Eigen::Rotation2D(rotation) * ( command.throttle * Eigen::Vector2d::UnitY());
+    position += command.throttle * (Eigen::Rotation2D(rotation / 180.0 * M_PI) * Eigen::Vector2d::UnitY());
     engine_->updatePosition(*this, position);
     engine_->updateRotation(*this, rotation);
 }
