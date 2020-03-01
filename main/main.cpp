@@ -15,7 +15,7 @@ int main()
     boost::random::uniform_int_distribution<> dist_y(0, 1000);
     boost::random::uniform_int_distribution<> dist_angle(-180, 180);
     Graphic graphic;
-    Logic::Field field(Eigen::Vector2d(1000, 2000));
+    Logic::Field field(Eigen::Vector2d(2000, 1000));
     Logic::PENTITY robot = std::make_shared<Logic::Robot>(&field);
     robot->setPosition(Eigen::Vector2d(500, 500));
     robot->setRotation(45);
