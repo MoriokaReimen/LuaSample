@@ -16,10 +16,13 @@ int main()
     boost::random::uniform_int_distribution<> dist_angle(-180, 180);
     Graphic graphic;
     Logic::Field field(Eigen::Vector2d(2000, 1000));
-    Logic::PENTITY robot = std::make_shared<Logic::Robot>(&field);
-    robot->setPosition(Eigen::Vector2d(500, 500));
-    robot->setRotation(45);
-    field.registerEntity(robot);
+    for (int i = 0; i < 20; ++i)
+    {
+        Logic::PENTITY robot = std::make_shared<Logic::Robot>(&field);
+        robot->setPosition(Eigen::Vector2d(dist_x(gen), dist_y(gen)));
+        robot->setRotation(45);
+        field.registerEntity(robot);
+    }
 
     // run the program as long as the window is open
     while (graphic.isOpen())
